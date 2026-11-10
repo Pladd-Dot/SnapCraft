@@ -1,0 +1,286 @@
+/* SnapCraft Inspector & Selection Overlay Styles */
+
+#snapcraft-inspector-overlay {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2147483645;
+  border: 2px solid #6366f1;
+  background-color: transparent; /* Clean transparent highlight - no dark or color tint overlay */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4), 0 0 12px rgba(99, 102, 241, 0.4);
+  transition: all 0.05s ease-out;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+#snapcraft-inspector-badge {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  background: #1e1b4b;
+  color: #c7d2fe;
+  border: 1px solid #6366f1;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#snapcraft-inspector-badge .tag {
+  color: #38bdf8;
+}
+
+#snapcraft-inspector-badge .dim {
+  color: #a5b4fc;
+}
+
+/* Floating Controller Bar */
+#snapcraft-floating-bar {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483647;
+  pointer-events: auto;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  border-radius: 30px;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #f8fafc;
+  font-size: 12px;
+  animation: snapcraftSlideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes snapcraftSlideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.snapcraft-bar-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.snapcraft-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6366f1;
+  box-shadow: 0 0 8px #6366f1;
+  animation: snapcraftPulse 1.5s infinite;
+}
+
+@keyframes snapcraftPulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.snapcraft-bar-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.2s;
+}
+
+.snapcraft-bar-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.snapcraft-bar-btn.danger {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.snapcraft-bar-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.4);
+}
+
+/* Region Selection Canvas Overlay */
+#snapcraft-area-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2147483646;
+  cursor: crosshair;
+  background: transparent;
+}
+
+/* In-Page Floating Preview Modal */
+#snapcraft-page-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #f3f4f6;
+  animation: snapcraftFadeIn 0.2s ease-out;
+}
+
+@keyframes snapcraftFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#snapcraft-page-modal .modal-card {
+  width: 420px;
+  max-width: 90vw;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#snapcraft-page-modal .modal-header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+#snapcraft-page-modal .modal-title {
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#snapcraft-page-modal .modal-close {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+#snapcraft-page-modal .modal-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#snapcraft-page-modal .preview-box {
+  width: 100%;
+  max-height: 300px;
+  background: #000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+#snapcraft-page-modal img {
+  max-width: 100%;
+  max-height: 270px;
+  object-fit: contain;
+}
+
+#snapcraft-page-modal textarea {
+  width: 100%;
+  height: 220px;
+  background: #030712;
+  color: #38bdf8;
+  font-family: monospace;
+  font-size: 11px;
+  border: none;
+  resize: none;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+#snapcraft-page-modal .meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+#snapcraft-page-modal .modal-footer {
+  padding: 14px 18px;
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#snapcraft-page-modal .btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+#snapcraft-page-modal .btn-primary {
+  background: #6366f1;
+  color: #ffffff;
+}
+
+#snapcraft-page-modal .btn-primary:hover {
+  background: #4f46e5;
+}
+
+#snapcraft-page-modal .btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+#snapcraft-page-modal .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

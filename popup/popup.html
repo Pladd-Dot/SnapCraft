@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnapCraft Studio</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>SnapCraft</h1>
+          <span class="badge">PRO</span>
+        </div>
+      </div>
+      <div class="status-indicator ready" id="statusIndicator" title="Extension active"></div>
+    </header>
+
+    <!-- Main Mode Selectors -->
+    <section class="section">
+      <h2 class="section-title">Capture Mode</h2>
+      <div class="mode-grid">
+        <button class="mode-card active" id="btnModeInspect" data-mode="inspect">
+          <div class="mode-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3h6v6H3zM15 3h6v6h-6zM15 15h6v6h-6zM3 15h6v6H3z"/>
+              <path d="M9 6h6M12 9v6M9 18h6"/>
+            </svg>
+          </div>
+          <div class="mode-info">
+            <span class="mode-name">Element Inspector</span>
+            <span class="mode-desc">Hover & click any element</span>
+          </div>
+        </button>
+
+        <button class="mode-card" id="btnModeViewport" data-mode="viewport">
+          <div class="mode-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <div class="mode-info">
+            <span class="mode-name">Visible Viewport</span>
+            <span class="mode-desc">Current screen view</span>
+          </div>
+        </button>
+
+        <button class="mode-card" id="btnModeFullpage" data-mode="fullpage">
+          <div class="mode-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="12" y2="18"/>
+              <line x1="15" y1="15" x2="12" y2="18"/>
+            </svg>
+          </div>
+          <div class="mode-info">
+            <span class="mode-name">Full Webpage</span>
+            <span class="mode-desc">Scroll & stitch complete page</span>
+          </div>
+        </button>
+
+        <button class="mode-card" id="btnModeArea" data-mode="area">
+          <div class="mode-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 3H3v2M9 3h2M15 3h2M19 3h2v2M21 9v2M21 15v2M21 19h-2v2M15 21h-2M9 21H7M3 21v-2M3 15v-2M3 9V7"/>
+            </svg>
+          </div>
+          <div class="mode-info">
+            <span class="mode-name">Region Selection</span>
+            <span class="mode-desc">Drag custom bounding box</span>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Export Settings -->
+    <section class="section">
+      <h2 class="section-title">Format & Resolution</h2>
+      <div class="format-pills">
+        <button class="format-pill active" data-format="png">PNG</button>
+        <button class="format-pill" data-format="jpeg">JPEG</button>
+        <button class="format-pill" data-format="webp">WEBP</button>
+        <button class="format-pill highlight" data-format="svg">
+          <span>SVG</span>
+          <span class="pill-badge">Vector</span>
+        </button>
+      </div>
+
+      <!-- Format options controls -->
+      <div class="controls-card">
+        <div class="control-row" id="qualityRow" style="display: none;">
+          <label for="qualityRange">Quality: <span id="qualityVal">92%</span></label>
+          <input type="range" id="qualityRange" min="10" max="100" value="92">
+        </div>
+
+        <div class="control-row">
+          <label for="scaleSelect">DPI Scale</label>
+          <select id="scaleSelect" class="custom-select">
+            <option value="1">1x Standard</option>
+            <option value="2" selected>2x High DPI (Retina)</option>
+            <option value="3">3x Ultra HD</option>
+          </select>
+        </div>
+
+        <div class="control-row checkbox-row">
+          <label for="transparentBg" class="toggle-label">
+            <span>Transparent Background</span>
+            <span class="help-text">(For PNG & SVG exports)</span>
+          </label>
+          <input type="checkbox" id="transparentBg" class="custom-toggle">
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy & Dummy Data Settings -->
+    <section class="section">
+      <div class="section-header-row">
+        <h2 class="section-title">Privacy & Dummy Data</h2>
+        <span class="pill-badge status-badge" id="dummyDataBadge" style="display: none;">Active</span>
+      </div>
+      <div class="controls-card">
+        <div class="control-row checkbox-row">
+          <label for="dummyDataToggle" class="toggle-label">
+            <span>Generate Dummy Data</span>
+            <span class="help-text">Sanitizes names, phones & emails (off by default)</span>
+          </label>
+          <input type="checkbox" id="dummyDataToggle" class="custom-toggle">
+        </div>
+
+        <div class="sub-controls" id="dummySubControls" style="display: none;">
+          <div class="sub-checkbox-row">
+            <label class="custom-checkbox-label">
+              <input type="checkbox" id="dummyNames" checked>
+              <span>Randomize Names</span>
+            </label>
+          </div>
+          <div class="sub-checkbox-row">
+            <label class="custom-checkbox-label">
+              <input type="checkbox" id="dummyPhones" checked>
+              <span>US Phone Numbers <span class="dim">((555) 555-01XX)</span></span>
+            </label>
+          </div>
+          <div class="sub-checkbox-row">
+            <label class="custom-checkbox-label">
+              <input type="checkbox" id="dummyEmails" checked>
+              <span>E-mail Addresses <span class="dim">(@example.com)</span></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Action Bar -->
+    <footer class="footer">
+      <button class="btn btn-primary" id="btnStartCapture">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 8v8M8 12h8"/>
+        </svg>
+        <span>Launch Capture</span>
+      </button>
+    </footer>
+  </div>
+
+  <!-- Preview Modal -->
+  <div class="modal" id="previewModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card">
+      <header class="modal-header">
+        <h3>Captured Preview</h3>
+        <button class="modal-close" id="btnCloseModal">&times;</button>
+      </header>
+      <div class="modal-body">
+        <div class="preview-container" id="previewContainer">
+          <img id="previewImage" alt="Captured element preview" src="">
+          <textarea id="previewSvgCode" readonly style="display: none;"></textarea>
+        </div>
+        <div class="preview-meta">
+          <span id="previewDimensions">0 x 0 px</span>
+          <span id="previewFormat">PNG</span>
+        </div>
+      </div>
+      <footer class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelModal">Cancel</button>
+        <button class="btn btn-secondary" id="btnCopyClipboard">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span>Copy</span>
+        </button>
+        <button class="btn btn-primary" id="btnDownload">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>Download File</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
